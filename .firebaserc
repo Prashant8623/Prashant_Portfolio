@@ -1,0 +1,16 @@
+{
+  "projects": {
+    "default": "raah-foundation-72dbe",
+    "staging": "raah-foundation-72dbe"
+  },
+  "targets": {
+    "raah-foundation-72dbe": {
+      "hosting": {
+        "default": [
+          "raah-foundation-72dbe"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

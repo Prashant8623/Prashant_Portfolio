@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 <link
   href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
   rel="stylesheet"
@@ -20,6 +22,7 @@ const RegistrationForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -51,6 +54,8 @@ const RegistrationForm = () => {
     if (!formData.Date) newErrors.Date = "Date of Birth is required";
     if (!formData.Relocate)
       newErrors.Relocate = "Relocation preference is required";
+    if (!formData.Languages.length)
+      newErrors.Languages = "Languages known is required";
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -58,11 +63,18 @@ const RegistrationForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(validate());
-
     if (validate()) {
+      Swal.fire({
+        title: "Success",
+        text: "Form submitted successfully",
+        icon: "success",
+        confirmButtonText: "OK",
+      }).then(() => {
+        navigate("/");
+      });
+
       console.log("Form Data:", formData);
-      alert("Form submitted successfully!");
+
       setFormData({
         FullName: "",
         Email: "",
@@ -98,7 +110,9 @@ const RegistrationForm = () => {
           )}
         </div>
         <div className="mb-3">
-          <label className="form-label">Email</label>
+          <label className="form-label">
+            Email<span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="email"
             className="form-control"
@@ -113,7 +127,9 @@ const RegistrationForm = () => {
           )}
         </div>
         <div className="mb-3">
-          <label className="form-label">Mobile Number</label>
+          <label className="form-label">
+            Mobile Number<span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="number"
             className="form-control"
@@ -129,7 +145,14 @@ const RegistrationForm = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Gender</label>
+          <label className="form-label">
+            Gender<span style={{ color: "red" }}>*</span>
+          </label>
+          {errors?.Gender && (
+            <div
+              style={{ color: "red", fontSize: "14px" }}
+            >{`${errors?.Gender}*`}</div>
+          )}
           <div>
             {["Male", "Female", "Other"].map((gender) => (
               <div className="form-check form-check-inline" key={gender}>
@@ -149,7 +172,14 @@ const RegistrationForm = () => {
         </div>
 
         <div className="mb-3">
-          <label className="form-label">Education</label>
+          <label className="form-label">
+            Education<span style={{ color: "red" }}>*</span>
+          </label>
+          {errors?.Education && (
+            <div
+              style={{ color: "red", fontSize: "14px" }}
+            >{`${errors?.Education}*`}</div>
+          )}
           <div>
             {["10th", "12th", "Pursuing", "Graduate", "Post-Graduate"].map(
               (edu) => (
@@ -169,7 +199,9 @@ const RegistrationForm = () => {
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">Date of Birth</label>
+          <label className="form-label">
+            Date of Birth<span style={{ color: "red" }}>*</span>
+          </label>
           <input
             type="date"
             className="form-control"
@@ -184,7 +216,14 @@ const RegistrationForm = () => {
           )}
         </div>
         <div className="mb-3">
-          <label className="form-label">Willing to Relocate?</label>
+          <label className="form-label">
+            Willing to Relocate?<span style={{ color: "red" }}>*</span>
+          </label>
+          {errors?.Relocate && (
+            <div
+              style={{ color: "red", fontSize: "14px" }}
+            >{`${errors?.Relocate}*`}</div>
+          )}
           <div>
             {["Yes", "No", "Maybe"].map((choice) => (
               <div className="form-check form-check-inline" key={choice}>
@@ -202,7 +241,14 @@ const RegistrationForm = () => {
           </div>
         </div>
         <div className="mb-3">
-          <label className="form-label">Languages Known</label>
+          <label className="form-label">
+            Languages Known<span style={{ color: "red" }}>*</span>
+          </label>
+          {errors?.Languages && (
+            <div
+              style={{ color: "red", fontSize: "14px" }}
+            >{`${errors?.Languages}*`}</div>
+          )}
           <div>
             {["Marathi", "Hindi", "English", "Other"].map((lang) => (
               <div className="form-check form-check-inline" key={lang}>
